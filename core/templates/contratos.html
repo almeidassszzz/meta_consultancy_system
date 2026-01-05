@@ -1,0 +1,19 @@
+<h1>Lista de Contratos</h1>
+
+<table border="1">
+    <tr>
+        <th>Código</th>
+        <th>Cliente</th>
+        <th>Serviço</th>
+        <th>Status</th>
+    </tr>
+
+    {% for contrato in contratos %}
+    <tr>
+        <td>{{ contrato.codigo }}</td>
+        <td>{{ contrato.cliente.nome }}</td>
+        <td>{{ contrato.servico.nome }}</td>
+        <td>{{ contrato.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
