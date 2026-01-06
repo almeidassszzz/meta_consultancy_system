@@ -6,6 +6,8 @@ Projeto desenvolvido em Django como MVP (Versão Alpha), com foco na validação
 - Python
 - Django
 - SQLite
+- HTML
+- CSS
 
 ## Funcionalidade principal
 - Cadastro de clientes, serviços e contratos
