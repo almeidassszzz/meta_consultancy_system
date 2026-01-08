@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth.decorators import login_required
+from .forms import ClienteForm, ServicoForm, ContratoForm
 
 def listar_contratos(request):
     contratos = Contrato.objects.all()
@@ -15,9 +16,11 @@ def listar_clientes(request):
     return render(request, 'clientes.html', {'clientes': clientes})
 
 
-#criando a logica de cadastro de clientes no site
+def inicio(request):
+    return render(request, 'inicio/inicio.html',{}) 
 
-@login_required #Com este decorator, só poderá ver a página quem estiver logado! Olha que fácil!
+
+@login_required 
 def cadastro_de_clientes(request):
     mensagem_sucesso = None
 
@@ -25,26 +28,20 @@ def cadastro_de_clientes(request):
     formato copiado dos exercicios. qualquer coisa so consultar a 2 pasta zip da padaria
     """
     if request.method == 'POST':
-        form = #preencher(request.POST)
+        form = ClienteForm(request.POST)
         
-        if form.is_valid(): #Checa o conteúdo do formulário
+        if form.is_valid():
 
-            #Salva o objeto no banco de dados se tudo estiver certinho
             cliente_salvo = form.save()
             
-            #Adiciona uma mensagem de sucesso para o usuário
-            mensagem_sucesso = f"Cliente'{cliente_salvo.nome}' cadastrado com sucesso!"
+            mensagem_sucesso = f"Cliente '{cliente_salvo.nome}' cadastrado com sucesso!"
             
-            #Instancia um novo formulário vazio para o usuário cadastrar outro item
-            form = #preencher()
+            form = ClienteForm()
 
-            #Repare como podemos trabalhar na view com o formulário sendo uma função
-            #Abstraindo totalmente a complexidade, que fica guardada no forms.py
 
-    else: #Se a requisição não for POST
+    else:
 
-        #Exibe um formulário vazio
-        form = #preencher()
+        form = ClienteForm()
 
     """
     ATENÇÃO AQUI MINHA TROPA
@@ -58,5 +55,5 @@ def cadastro_de_clientes(request):
         'mensagem_sucesso': mensagem_sucesso
     }
 
-    #Renderiza o template criado pela Letícia e pela Adrielly
+    #Renderizar o template criado pela Lettícia e pela Adrielly
     return render(request, 'contratos/cadastro_de_clientes.html', context)

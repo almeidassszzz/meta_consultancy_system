@@ -1,8 +1,8 @@
-from django.urls import path, include
-from .views import listar_contratos
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('contratos/', listar_contratos),
-    path('inicio/', include('django.contrib.auth.urls'))
-   
+    path('contratos', views.listar_contratos, name = 'contratos'),
+    path('login', views.inicio, name = 'login'),
+    path('cadastro', views.cadastro_de_clientes, name = 'cadastro')
 ]

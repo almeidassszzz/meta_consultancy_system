@@ -4,21 +4,20 @@ from .models import Cliente, Servico, Contrato #Essa é a classe que contém os 
 class ClienteForm(forms.ModelForm): #Repare na Herança!
     class Meta: #Uma classe dentro de outra classe!
 
-        #Duas variáveis vão definir a base da tabela e os campos a serem preenchidos
+        #Duas variáveis vão definir a base da tabela e os campos a serem preenchidos. modelo replicado abaixo
         model = Cliente 
-        fields = ['nome', 'CNPJ'] 
+        fields = ['nome', 'cnpj'] 
         
         #Adiciona classes CSS para estilização (opcional, mas recomendado). aqui nao sei mexer em nada nao ai vcs ve legal tlgd minha rpzd, so editei p ficar legal de ler ntj
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Ex: Patrick Codadores'}),
-            'CNPJ': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Ex: 15501550155015'}),
+            'cnpj': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Ex: 15501550155015'}),
         }
 
 
-class ServicoForm(forms.ModelForm): #Repare na Herança!
-    class Beta: #Uma classe dentro de outra classe!
+class ServicoForm(forms.ModelForm): 
+    class Beta: 
 
-        #Duas variáveis vão definir a base da tabela e os campos a serem preenchidos
         model = Servico
         fields = ['nome', 'preco_base'] 
         
@@ -28,11 +27,11 @@ class ServicoForm(forms.ModelForm): #Repare na Herança!
             'preco_base': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Ex: 1500.50'}),
         }
 
-class ContratoForm(forms.ModelForm): #Repare na Herança!
-    class Zeta: #Uma classe dentro de outra classe!
 
-        #Duas variáveis vão definir a base da tabela e os campos a serem preenchidos
-        model = Servico
+class ContratoForm(forms.ModelForm): 
+    class Zeta: 
+
+        model = Contrato
         fields = ['codigo', 'cliente', 'servico', 'valor_negociado', 'data_inicio', 'data_fim'] 
         
         #Adiciona classes CSS para estilização (opcional, mas recomendado). aqui nao sei mexer em nada nao ai vcs ve legal tlgd minha rpzd, so editei p ficar legal de ler ntj
