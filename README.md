@@ -1,6 +1,6 @@
 # MVP – Sistema de Gestão de Contratos
 
-Projeto desenvolvido em Django como MVP (Versão Alpha), com foco na validação da funcionalidade principal do sistema.
+Projeto desenvolvido em Django com foco na validação da funcionalidade principal do sistema de consultorias e administração de contratos.
 
 ## Tecnologias
 - Python
