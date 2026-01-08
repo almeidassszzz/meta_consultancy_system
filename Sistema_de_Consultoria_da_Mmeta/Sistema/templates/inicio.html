@@ -1,21 +1,25 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset = "UTF-8">
-        <meta name = "viewport"
-        content ="width=device-width,
-        initial-scale=1.0">
-        <title>Página de Controle</title>
-        <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
-    </head>
-<body>
+{% block nav_links %} 
 
-    <h1>Acesso</h1>
+  <li><a href="{% url 'logout' %}">Sair</a></li> <!--- Link para logout/sair -->
 
-    <h3>Login:</h3>
-    <h3>Senha:</h3>
+{% endblock %} 
 
-</body>
-<html>
+{% block content %} 
+
+  <h1>Painel de Controle</h1>
+
+  <p>Olá, usuário! Aqui você pode gerenciar os contratos</p>
+  <ul class="options-list">
+    <li><a href="{% url 'criar_contrato' %}">Criar Contrato</a></li>
+    <li><a href="{% url 'ver_contrato' %}">Ver Contrato</a></li>
+    <li><a href="{% url 'filtrar_contrato' %}">Filtrar Contrato</a></li>
+    <li><a href="{% url 'buscar_contrato' %}">Buscar Contrato</a></li>
+    <li><a href="{% url 'editar_contrato' %}">Editar Contrato</a></li>
+    <li><a href="{% url 'remover_contrato' %}">Remover Contrato</a></li>
+    <li><a href="{% url 'criar_login' %}">Criar Login de Funcionário</a></li> <!-- Para criar login de novos funcionários -->
+    <li><a href="{% url 'remover_login' %}">Remover Login de Funcionário</a></li> <!-- Para remover login de funcionários --> 
+  </ul>
+
+{% endblock %} 

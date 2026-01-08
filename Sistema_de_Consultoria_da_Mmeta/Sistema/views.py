@@ -18,14 +18,12 @@ def listar_clientes(request):
     return render(request, 'clientes.html', {'clientes': clientes})
 
 #HTMLS
-def inicio(request):
-    return render(request, 'inicio.html',{})
 
 def login(request):
     return render(request, 'login.html',{})
 
-def dashboard(request):
-    return render(request, 'dashboard.html',{}) 
+def inicio(request):
+    return render(request, 'inicio.html',{}) 
 
 def index(request):
     return render(request, 'index.html',{}) 

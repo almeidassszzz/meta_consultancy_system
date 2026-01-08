@@ -11,10 +11,9 @@ urlpatterns = [
     path('contratos/remover', views.remover_contrato, name = 'remover_contrato'),
     path('login', views.login, name = 'login'),
     path('cadastro', views.cadastro_de_clientes, name = 'cadastro'),
-    path('inicio', views.inicio, name = 'inicio'),
     path('login/criar', views.criar_login, name = 'criar_login'),
     path('login/remover', views.remover_login, name = 'remover_login'),
-    path('dashboard', views.dashboard, name = 'dashboard'),
+    path('inicio', views.inicio, name = 'inicio'),
     path('index', views.index, name = 'index'),
     path('logout', views.deslogar, name = 'logout'),
 ]
