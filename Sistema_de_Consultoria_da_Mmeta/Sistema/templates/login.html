@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset = "UTF-8">
-        <meta name = "viewport"
-        content ="width=device-width,
-        initial-scale=1.0">
-        <title>Página de Controle</title>
-    </head>
-<body>
+{% extends 'base.html' %} 
 
-    <h1>Acesso</h1>
+{% block nav_links %}
+ <!-- Sem links extras aqui -->
+{% endblock %}
 
-    <h3>Login:</h3>
-    <h3>Senha:</h3>
+{% block content %} 
 
-</body>
+  <h1>Login no Sistema de RH</h1>
+<form action="{% url 'login' %}" method="post"> <!-- auth views aqui -->
+  {% csrf_token %}
+
+  <label for="username">Usuário: </label>
+  <input type="text" id="username" name="username" required>
+  <label for="password">Senha: </label>
+  <input type="password" id="password" name="password" required>
+  <button type="submit">Entrar</button>
+  
+</form>
+
+<p>Não tem conta? <a href="{% url 'create_login' %}">Criar login</a></p> <!-- Link para criar login -->
+
+{% endblock %}

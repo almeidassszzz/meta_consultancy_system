@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block nav_links %} 
+
+  <li><a href="{% url 'logout' %}">Sair</a></li> <!--- Link para logout/sair -->
+
+{% endblock %} 
+
+{% block content %} 
+
+  <h1>Painel de Controle</h1>
+
+  <p>Olá, usuário! Aqui você pode gerenciar os contratos</p>
+  <ul class="options-list">
+    <li><a href="{% url 'criar_contrato' %}">Criar Contrato</a></li>
+    <li><a href="{% url 'ver_contrato' %}">Ver Contrato</a></li>
+    <li><a href="{% url 'filtrar_contrato' %}">Filtrar Contrato</a></li>
+    <li><a href="{% url 'buscar_contrato' %}">Buscar Contrato</a></li>
+    <li><a href="{% url 'editar_contrato' %}">Editar Contrato</a></li>
+    <li><a href="{% url 'remover_contrato' %}">Remover Contrato</a></li>
+    <li><a href="{% url 'criar_login' %}">Criar Login de Funcionário</a></li> <!-- Para criar login de novos funcionários -->
+    <li><a href="{% url 'remover_login' %}">Remover Login de Funcionário</a></li> <!-- Para remover login de funcionários --> 
+  </ul>
+
+{% endblock %} 

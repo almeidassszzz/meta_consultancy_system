@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta — Consultoria de RH</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Meta — Consultoria de RH</div>
+    <ul class="nav-links">
+      {% block nav_links %} {% endblock %}
+    </ul>
+  </nav>
+  <main>
+     {% block content %} {% endblock %}
+  </main>
+  <footer>
+        <p>&copy; 2026 Meta de Consultoria de RH. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
