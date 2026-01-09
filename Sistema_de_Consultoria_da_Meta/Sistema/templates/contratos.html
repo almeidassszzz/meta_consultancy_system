@@ -1,0 +1,45 @@
+<h1>Gestão dos Contratos</h1>
+
+<table border="1">
+    <tr>
+        <th>Código</th>
+        <th>Cliente</th>
+        <th>CNPJ</th>
+        <th>Contrato</th>
+        <th>Serviço</th>
+        <th>Cod.Serviço</th>
+        <th>Quantidade</th>
+        <th>Valor Unitário</th>
+        <th>Valor Total</th>
+        <th>Início</th>
+        <th>Fim</th>
+        <th>Status</th>
+        <th>Observação</th>
+    </tr>
+
+    {% for contrato in contratos %}
+    <tr>
+        <td>{{ contrato.codigo }}</td>
+        <td>{{ contrato.cliente.nome }}</td>
+        <td>{{ contrato.servico.nome }}</td>
+        <td>{{ contrato.status }}</td>
+    <tr>
+    {% endfor %}    
+    
+    {% for servico in servicos %}
+    <tr>
+        <td>{{ servico.nome }}</td>
+        <td>{{ servico.preco_base }}</td>
+
+    </tr>
+    {% endfor %}
+
+    {% for cliente in clientes %}
+    <tr>
+        <td>{{ cliente.nome }}</td>
+        <td>{{ cliente.cnpj }}</td>
+
+    </tr>
+    {% endfor %}
+     
+</table>
