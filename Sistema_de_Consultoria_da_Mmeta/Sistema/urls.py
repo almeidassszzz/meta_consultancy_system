@@ -3,17 +3,11 @@ from . import views
 
 urlpatterns = [
     path('contratos', views.listar_contratos, name = 'contratos'),
-    path('contratos/criar', views.criar_contrato, name = 'criar_contrato'),
-    path('contratos', views.ver_contrato, name = 'ver_contrato'),
-    path('contratos/filtrar', views.filtrar_contrato, name = 'filtrar_contrato'),
-    path('contratos/buscar', views.buscar_contrato, name = 'buscar_contrato'),
-    path('contratos/editar', views.editar_contrato, name = 'editar_contrato'),
-    path('contratos/remover', views.remover_contrato, name = 'remover_contrato'),
+    path('contratos/gerenciar', views.gerenciar_contrato, name = 'gerenciar_contratos'),
     path('login', views.login, name = 'login'),
     path('cadastro', views.cadastro_de_clientes, name = 'cadastro'),
     path('login/criar', views.criar_login, name = 'criar_login'),
-    path('login/remover', views.remover_login, name = 'remover_login'),
-    path('inicio', views.inicio, name = 'inicio'),
+    path('painel', views.painel_de_controle, name = 'painel_de_controle'),
     path('index', views.index, name = 'index'),
     path('logout', views.deslogar, name = 'logout'),
 ]
