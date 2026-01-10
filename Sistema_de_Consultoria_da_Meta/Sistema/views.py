@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ClienteForm, ServicoForm, ContratoForm
 from django.contrib.auth import logout
 
-
+#base pra gente trabalhar em cima
 def listar_contratos(request):
     contratos = Contrato.objects.all()
     return render(request, 'contratos.html', {'contratos': contratos})
@@ -18,7 +18,6 @@ def listar_clientes(request):
     return render(request, 'clientes.html', {'clientes': clientes})
 
 #HTMLS
-
 def login(request):
     return render(request, 'login.html',{})
 
@@ -28,18 +27,18 @@ def painel_de_controle(request):
 def index(request):
     return render(request, 'index.html',{}) 
 
-#AJUDANDO LETTÍCIA AQUI NO LOGOUT
-
+#logout
 def deslogar(request):
     logout(request)
     return redirect('login')
 
-# AJUDANDO AQUI PRA MOSTRAR O NEGOCIO, MAS NAO TA NADA DEFINIDO AINDA
+#gerenciar contratos
 def gerenciar_contrato(request):
-    return render(request, 'contratos/gerenciar_contrato.html')
+    return render(request, 'gerenciar_contratos.html')
 
+#criar login
 def criar_login(request):
-    return render(request, 'login/criar.html')
+    return render(request, 'criar_login.html')
 
 
 

@@ -1,5 +1,5 @@
 """
-WSGI config for Sistema_de_Consultoria_da_Mmeta project.
+WSGI config for Sistema_de_Consultoria_da_Meta project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
