@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth.decorators import login_required
-from .forms import ClienteForm, ServicoForm, ContratoForm
-from django.contrib.auth import logout
+from .forms import ClienteForm, UserRegisterForm
+from django.contrib.auth import logout, login
+
+
 
 #base pra gente trabalhar em cima
 def listar_contratos(request):
@@ -36,9 +38,6 @@ def deslogar(request):
 def gerenciar_contrato(request):
     return render(request, 'gerenciar_contratos.html')
 
-#criar login
-def criar_login(request):
-    return render(request, 'criar_login.html')
 
 
 
@@ -77,5 +76,19 @@ def cadastro_de_clientes(request):
         'mensagem_sucesso': mensagem_sucesso
     }
 
-    #Renderizar o template criado pela Lettícia e pela Adrielly
     return render(request, 'contratos/cadastro_de_clientes.html', context)
+
+#formulario do criar_login
+
+def criar_login(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('painel')
+    else:
+        form = UserRegisterForm()
+
+    return render(request, 'criar_login.html', {'form': form})
+    
