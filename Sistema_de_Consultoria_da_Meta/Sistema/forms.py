@@ -45,9 +45,8 @@ class ContratoForm(forms.ModelForm):
 
 #formulario de cadastro no login
 
-class UserRegisterForm(UserCreationForm):
+class RegistroForm(UserCreationForm):
     usuario = forms.CharField()
-    senha = forms.PasswordInput()
     
     class Feta:
         

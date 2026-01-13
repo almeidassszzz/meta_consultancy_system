@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth.decorators import login_required
-from .forms import ClienteForm, UserRegisterForm
+from .forms import ClienteForm, RegistroForm
 from django.contrib.auth import logout, login
-
+from django.views.generic.edit import CreateView
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 
 #base pra gente trabalhar em cima
@@ -82,7 +84,7 @@ def cadastro_de_clientes(request):
 
 def criar_login(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = RegistroForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -92,3 +94,8 @@ def criar_login(request):
 
     return render(request, 'criar_login.html', {'form': form})
     
+class RegistroUser(CreateView):
+    model = User
+    template_name = 'criar_login.html'
+    form_class = RegistroForm
+    success_url = reverse_lazy('index')
