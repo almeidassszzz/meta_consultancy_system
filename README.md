@@ -175,7 +175,7 @@ Desenvolvido por:
 
 - Lettícia Sabino
 
-- Patrick Almeida
+- Patrick de Almeida
 
 - Waleska Marques 
 
