@@ -90,7 +90,7 @@ def criar_login(request):
             login(request, user)
             return redirect('painel')
     else:
-        form = UserRegisterForm()
+        form = RegistroForm()
 
     return render(request, 'criar_login.html', {'form': form})
     
