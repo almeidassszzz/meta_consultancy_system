@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block nav_links %}
+<li><a href="{% url 'login' %}">Voltar</a></li>
+<li><a href="{% url 'logout' %}">Sair</a></li>
+{% endblock %}
+
+{% block content %}
+<!-- criar_login.html -->
+<div class="form-page">
+  <div class="card form-card">
+
+    <h1>Criar Login</h1>
+    <p class="form-subtitle">Cadastro de Funcionário</p>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <label>Usuário</label>
+      <input type="text" name="username" required>
+
+      <label>Senha</label>
+      <input type="password" name="password" required>
+
+      <button type="submit">Criar Usuário</button>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

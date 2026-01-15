@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth.decorators import login_required
 from .forms import ClienteForm, RegistroForm
@@ -8,33 +9,37 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
 
+def index(request):
+    return render(request, 'index.html', {}) 
+
+
 #base pra gente trabalhar em cima
 def listar_contratos(request):
     contratos = Contrato.objects.all()
-    return render(request, 'contratos.html', {'contratos': contratos})
+    contratos_feitos = [item.nome for item in contratos]
+    return HttpResponse(f"Contratos listados em nosso Banco de Dados: {', '.join(contratos_feitos)}")
 
 def listar_servicos(request):
     servicos = Servico.objects.all()
-    return render(request, 'servicos.html', {'servicos': servicos})
+    servicos_contratados = [item.nome for item in servicos]
+    return HttpResponse(f"Serviços contratados por clientes e listados no Banco de Dados: {', '.join(servicos_contratados)}")
 
 def listar_clientes(request):
     clientes = Cliente.objects.all()
-    return render(request, 'clientes.html', {'clientes': clientes})
+    clientela = [item.nome for item in clientes]
+    return HttpResponse(f"Clientes listados em nosso Banco de Dados: {', '.join(clientela)}")
 
 #HTMLS
 def login(request):
-    return render(request, 'login.html',{})
+    return render(request, 'registration/login.html', {})
 
 def painel_de_controle(request):
-    return render(request, 'painel_de_controle.html',{}) 
-
-def index(request):
-    return render(request, 'index.html',{}) 
+    return render(request, 'painel_de_controle.html', {}) 
 
 #logout
 def deslogar(request):
     logout(request)
-    return redirect('login')
+    return redirect('accounts/login')
 
 #gerenciar contratos
 def gerenciar_contrato(request):
@@ -47,9 +52,6 @@ def gerenciar_contrato(request):
 def cadastro_de_clientes(request):
     mensagem_sucesso = None
 
-    """
-    formato copiado dos exercicios. qualquer coisa so consultar a 2 pasta zip da padaria
-    """
     if request.method == 'POST':
         form = ClienteForm(request.POST)
         
@@ -66,19 +68,13 @@ def cadastro_de_clientes(request):
 
         form = ClienteForm()
 
-    """
-    ATENÇÃO AQUI MINHA TROPA
-    O context é peça fundamental para o Django!
-    ele é um dicionário em que você mapeia onde cada variável da sua view
-    encontra as variáveis descritas no HTML!
-    É assim que ele sabe onde encaixar o que.
-    """
+
     context = {
         'form': form,
         'mensagem_sucesso': mensagem_sucesso
     }
 
-    return render(request, 'contratos/cadastro_de_clientes.html', context)
+    return render(request, 'gerenciar_contratos.html', context)
 
 #formulario do criar_login
 
@@ -92,10 +88,10 @@ def criar_login(request):
     else:
         form = RegistroForm()
 
-    return render(request, 'criar_login.html', {'form': form})
+    return render(request, 'registro.html', {'form': form})
     
 class RegistroUser(CreateView):
     model = User
-    template_name = 'criar_login.html'
+    template_name = 'registration/registro.html'
     form_class = RegistroForm
     success_url = reverse_lazy('index')

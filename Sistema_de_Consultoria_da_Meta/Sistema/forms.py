@@ -46,9 +46,8 @@ class ContratoForm(forms.ModelForm):
 #formulario de cadastro no login
 
 class RegistroForm(UserCreationForm):
-    usuario = forms.CharField()
+    email = forms.EmailField()
     
-    class Feta:
-        
+    class Feta:  
         model = User
-        fields = ['usuario', 'email', 'função']
+        fields = ('usuário', 'email', 'função')
