@@ -1,45 +1,44 @@
-<h1>Gestão dos Contratos</h1>
+{% extends 'base.html' %}
 
-<table border="1">
-    <tr>
-        <th>Código</th>
-        <th>Cliente</th>
-        <th>CNPJ</th>
-        <th>Contrato</th>
-        <th>Serviço</th>
-        <th>Cod.Serviço</th>
-        <th>Quantidade</th>
-        <th>Valor Unitário</th>
-        <th>Valor Total</th>
-        <th>Início</th>
-        <th>Fim</th>
-        <th>Status</th>
-        <th>Observação</th>
-    </tr>
+{% block nav_links %}
+  <li><a href="{% url 'painel_de_controle' %}">Voltar ao Painel</a></li>
+  <li><a href="{% url 'logout' %}">Sair</a></li>
+{% endblock %}
 
-    {% for contrato in contratos %}
-    <tr>
-        <td>{{ contrato.codigo }}</td>
-        <td>{{ contrato.cliente.nome }}</td>
-        <td>{{ contrato.servico.nome }}</td>
-        <td>{{ contrato.status }}</td>
-    <tr>
-    {% endfor %}    
-    
-    {% for servico in servicos %}
-    <tr>
-        <td>{{ servico.nome }}</td>
-        <td>{{ servico.preco_base }}</td>
+{% block content %}
+<div class="container">
 
-    </tr>
-    {% endfor %}
+  <h1>Gestão dos Contratos</h1>
 
-    {% for cliente in clientes %}
-    <tr>
-        <td>{{ cliente.nome }}</td>
-        <td>{{ cliente.cnpj }}</td>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Cliente</th>
+          <th>CNPJ</th>
+          <th>Serviço</th>
+          <th>Status</th>
+        </tr>
+      </thead>
 
-    </tr>
-    {% endfor %}
-     
-</table>
+      <tbody>
+        {% for contrato in contratos %}
+        <tr>
+          <td>{{ contrato.id }}</td>
+          <td>{{ contrato.cliente.nome }}</td>
+          <td>{{ contrato.cliente.cnpj }}</td>
+          <td>{{ contrato.servico.nome }}</td>
+          <td>{{ contrato.status }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">Nenhum contrato cadastrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

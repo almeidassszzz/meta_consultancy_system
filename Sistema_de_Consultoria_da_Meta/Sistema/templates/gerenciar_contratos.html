@@ -6,40 +6,43 @@
 {% endblock %}
 
 {% block content %}
-<h1>Gerenciar Contratos</h1>
+<div class="container">
 
-<p>Abaixo estão listados todos os contratos cadastrados no sistema.</p>
+  <h1>Gerenciar Contratos</h1>
+  <p>Contratos cadastrados no sistema:</p>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Cliente</th>
-      <th>Serviço</th>
-      <th>Status</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Serviço</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contrato in contratos %}
+        <tr>
+          <td>{{ contrato.id }}</td>
+          <td>{{ contrato.cliente }}</td>
+          <td>{{ contrato.servico }}</td>
+          <td>{{ contrato.status }}</td>
+          <td>
+            <button class="btn" disabled>Editar</button>
+            <button class="btn btn-danger" disabled>Excluir</button>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">Nenhum contrato cadastrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
-  <tbody>
-    {% for contrato in contratos %}
-    <tr>
-      <td>{{ contrato.id }}</td>
-      <td>{{ contrato.cliente }}</td>
-      <td>{{ contrato.servico }}</td>
-      <td>{{ contrato.status }}</td>
-      <td>
-        <a href="#" class="btn btn-sm">Editar</a>
-        <a href="#" class="btn btn-sm btn-danger">Encerrar</a>
-      </td>
-    </tr>
-    {% empty %}
-    <tr>
-      <td colspan="5">Nenhum contrato cadastrado.</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+</div>
 {% endblock %}
 
-<!-- Ajuste inicial de layout -->
