@@ -9,11 +9,18 @@ urlpatterns = [
 
     path('contratos/gerenciar', views.gerenciar_contrato, name = 'gerenciar_contratos'),
 
-    path('accounts/login', views.login, name = 'login'),
+    path('accounts/login/', views.login, name = 'entrar'),
 
     path('registro', views.RegistroUser.as_view(), name = 'registro'),
 
     path('painel', views.painel_de_controle, name = 'painel_de_controle'),
     
     path('accounts/logout', views.deslogar, name = 'logout'),
+
+    path('accounts/cadastro_cliente', views.cadastro_de_clientes, name = 'cadastrar_cliente'),
+
+    path('accounts/cadastro_servico', views.cadastro_de_servicos, name = 'cadastrar_servico'),
+
+    path('accounts/cadastro_cliente', views.cadastro_de_contratos, name = 'cadastrar_contrato'),
+
 ]

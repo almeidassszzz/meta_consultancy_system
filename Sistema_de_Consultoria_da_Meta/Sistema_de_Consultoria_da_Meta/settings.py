@@ -121,6 +121,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-LOGIN_URL = '/accounts/login'
-LOGIN_REDIRECT_URL = '/painel'
-LOGOUT_REDIRECT_URL = '/login'
+LOGIN_URL = 'entrar'
+LOGIN_REDIRECT_URL = 'painel'
+LOGOUT_REDIRECT_URL = 'index'

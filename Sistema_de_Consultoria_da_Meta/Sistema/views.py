@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth.decorators import login_required
-from .forms import ClienteForm, RegistroForm
+from .forms import ClienteForm, RegistroForm, ServicoForm, ContratoForm
 from django.contrib.auth import logout, login
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
@@ -39,7 +39,7 @@ def painel_de_controle(request):
 #logout
 def deslogar(request):
     logout(request)
-    return redirect('accounts/login')
+    return redirect('entrar')
 
 #gerenciar contratos
 def gerenciar_contrato(request):
@@ -74,7 +74,66 @@ def cadastro_de_clientes(request):
         'mensagem_sucesso': mensagem_sucesso
     }
 
-    return render(request, 'gerenciar_contratos.html', context)
+    return render(request, 'cadastro_cliente.html', context)
+
+
+@login_required 
+def cadastro_de_servicos(request):
+    mensagem_sucesso = None
+
+    if request.method == 'POST':
+        form = ServicoForm(request.POST)
+        
+        if form.is_valid():
+
+            servico_salvo = form.save()
+            
+            mensagem_sucesso = f"Serviço '{servico_salvo.nome}' cadastrado com sucesso!"
+            
+            form = ServicoForm()
+
+
+    else:
+
+        form = ServicoForm()
+
+
+    context = {
+        'form': form,
+        'mensagem_sucesso': mensagem_sucesso
+    }
+
+    return render(request, 'cadastro_servico.html', context)
+
+
+@login_required 
+def cadastro_de_contratos(request):
+    mensagem_sucesso = None
+
+    if request.method == 'POST':
+        form = ContratoForm(request.POST)
+        
+        if form.is_valid():
+
+            contrato_salvo = form.save()
+            
+            mensagem_sucesso = f"Contrato '{contrato_salvo.nome}' registrado com sucesso!"
+            
+            form = ContratoForm()
+
+
+    else:
+
+        form = ClienteForm()
+
+
+    context = {
+        'form': form,
+        'mensagem_sucesso': mensagem_sucesso
+    }
+
+    return render(request, 'cadastro_contrato.html', context)
+
 
 #formulario do criar_login
 
