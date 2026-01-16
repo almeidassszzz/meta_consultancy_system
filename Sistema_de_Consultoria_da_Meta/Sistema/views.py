@@ -33,6 +33,7 @@ def listar_clientes(request):
 def login(request):
     return render(request, 'registration/login.html', {})
 
+@login_required
 def painel_de_controle(request):
     return render(request, 'painel_de_controle.html', {}) 
 
@@ -136,21 +137,14 @@ def cadastro_de_contratos(request):
 
 
 #formulario do criar_login
-
-def criar_login(request):
-    if request.method == 'POST':
-        form = RegistroForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('painel')
-    else:
-        form = RegistroForm()
-
-    return render(request, 'registro.html', {'form': form})
     
 class RegistroUser(CreateView):
     model = User
     template_name = 'registration/registro.html'
     form_class = RegistroForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('painel')
+
+    def form_valid(self, form):
+        response =  super().form_valid(form)
+        login(self.request, self.object)
+        return response

@@ -2,7 +2,7 @@ from django.db import models
 from datetime import date
 
 class Cliente(models.Model):
-    nome = models.CharField(max_length = 255, unique= True)
+    nome = models.CharField(max_length = 255, unique = True)
     cnpj = models.CharField(max_length = 14, unique = True)
 
     def __str__(self):
