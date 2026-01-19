@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
-{% block nav_links %} 
-
-<li><a href="{% url 'entrar' %}">Entrar</a></li> <!-- Link para a página de login -->
-
+{% block nav_links %}
+  {% if user.is_authenticated %}
+    <li>
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Sair</button>
+      </form>
+    </li>
+  {% else %}
+    <li><a href="{% url 'entrar' %}">Entrar</a></li>
+  {% endif %}
 {% endblock %}
 
 {% block content %} 

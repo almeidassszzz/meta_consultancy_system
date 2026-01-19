@@ -46,8 +46,8 @@ class ContratoForm(forms.ModelForm):
 #formulario de cadastro no login
 
 class RegistroForm(UserCreationForm):
-    email = forms.EmailField(required = True, help_text = 'Preencha corretamente para prosseguir.')
+    email = forms.EmailField(required = True, help_text = 'Insira um email válido para prosseguir.')
     
-    class Feta:  
+    class Meta:  
         model = User
-        fields = ('usuário', 'email')
+        fields = ('username', 'email', 'password1', 'password2')

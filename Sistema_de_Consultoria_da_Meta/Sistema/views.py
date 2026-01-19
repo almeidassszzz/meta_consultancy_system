@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth.decorators import login_required
 from .forms import ClienteForm, RegistroForm, ServicoForm, ContratoForm
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, authenticate, login as auth_login
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -11,7 +11,6 @@ from django.urls import reverse_lazy
 
 def index(request):
     return render(request, 'index.html', {}) 
-
 
 #base pra gente trabalhar em cima
 def listar_contratos(request):
@@ -29,11 +28,22 @@ def listar_clientes(request):
     clientela = [item.nome for item in clientes]
     return HttpResponse(f"Clientes listados em nosso Banco de Dados: {', '.join(clientela)}")
 
-#HTMLS
-def login(request):
-    return render(request, 'registration/login.html', {})
 
-@login_required
+def entrar(request):
+    if request.method == "POST":
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+
+            user = authenticate(request, username = username, password = password)
+
+            if user is not None:
+                auth_login(request, user)
+                return redirect('painel')  
+
+            return render(request, 'registration/login.html', {'erro': 'Usuário ou senha inválidos!'})
+    return render(request, 'registration/login.html')
+
+@login_required(login_url = 'entrar')
 def painel_de_controle(request):
     return render(request, 'painel_de_controle.html', {}) 
 
@@ -45,8 +55,6 @@ def deslogar(request):
 #gerenciar contratos
 def gerenciar_contrato(request):
     return render(request, 'gerenciar_contratos.html')
-
-
 
 
 @login_required 
@@ -64,11 +72,9 @@ def cadastro_de_clientes(request):
             
             form = ClienteForm()
 
-
     else:
 
         form = ClienteForm()
-
 
     context = {
         'form': form,
@@ -93,11 +99,9 @@ def cadastro_de_servicos(request):
             
             form = ServicoForm()
 
-
     else:
 
         form = ServicoForm()
-
 
     context = {
         'form': form,
@@ -122,11 +126,9 @@ def cadastro_de_contratos(request):
             
             form = ContratoForm()
 
-
     else:
 
         form = ClienteForm()
-
 
     context = {
         'form': form,
@@ -145,6 +147,6 @@ class RegistroUser(CreateView):
     success_url = reverse_lazy('painel')
 
     def form_valid(self, form):
-        response =  super().form_valid(form)
-        login(self.request, self.object)
-        return response
+        user = form.save()
+        login(self.request, user)
+        return redirect(self.success_url)
