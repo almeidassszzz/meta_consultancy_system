@@ -11,9 +11,9 @@ urlpatterns = [
 
     path('accounts/login/', views.entrar, name = 'entrar'),
 
-    path('registro', views.RegistroUser.as_view(), name = 'registro'),
+    path('registro/', views.RegistroUser.as_view(), name = 'registro'),
 
-    path('painel', views.painel_de_controle, name = 'painel'),
+    path('painel/', views.painel_de_controle, name = 'painel'),
     
     path('accounts/logout/', views.deslogar, name = 'logout'),
 

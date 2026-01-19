@@ -16,7 +16,7 @@ class ClienteForm(forms.ModelForm):
 
 
 class ServicoForm(forms.ModelForm): 
-    class Beta: 
+    class Meta: 
 
         model = Servico
         fields = ['nome', 'preco_base'] 
@@ -28,7 +28,7 @@ class ServicoForm(forms.ModelForm):
 
 
 class ContratoForm(forms.ModelForm): 
-    class Zeta: 
+    class Meta: 
 
         model = Contrato
         fields = ['codigo', 'cliente', 'servico', 'valor_negociado', 'data_inicio', 'data_fim'] 
