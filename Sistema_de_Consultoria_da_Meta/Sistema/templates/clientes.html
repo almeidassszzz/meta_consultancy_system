@@ -8,8 +8,8 @@
 {% block content %}
 <div class="container">
 
-  <h1>Gerenciar Contratos</h1>
-  <p>Contratos cadastrados no sistema:</p>
+  <h1>Gerenciar Clientes</h1>
+  <p>Clientes vinculados ao sistema:</p>
 
   <div class="table-container">
     <table class="table">
@@ -23,12 +23,12 @@
         </tr>
       </thead>
       <tbody>
-        {% for Contrato in contratos %}
+        {% for Cliente in clientes %}
         <tr>
-          <td>{{ contrato.id }}</td>
-          <td>{{ contrato.cliente }}</td>
-          <td>{{ contrato.servico }}</td>
-          <td>{{ contrato.status }}</td>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.cnpj }}</td>
+          <td>{{ cliente.vinculo }}</td>
+          <td>{{ cliente.status }}</td>
           <td>
             <button class="btn" disabled>Editar</button>
             <button class="btn btn-danger" disabled>Excluir</button>
@@ -36,7 +36,7 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="5">Nenhum contrato cadastrado.</td>
+          <td colspan="5">Nenhum cliente encontrado ;[.</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -45,4 +45,3 @@
 
 </div>
 {% endblock %}
-

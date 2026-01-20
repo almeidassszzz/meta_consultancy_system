@@ -25,6 +25,7 @@ class Contrato(models.Model):
     data_inicio = models.DateField()
     data_fim = models.DateField()
 
+    @property
     def status(self):
         return "VIGENTE" if date.today() <= self.data_fim else "FINALIZADO"
 
