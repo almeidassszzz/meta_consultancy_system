@@ -9,9 +9,11 @@
 
 ## 📄 Descrição do Projeto
 
-Este projeto consiste em um sistema simples de **gerenciamento de Recursos Humanos (RH)** desenvolvido para a **Meta Consultoria de RH**.
+Este projeto consiste em desenvolver um sistema focado em  **gerenciamento de Recursos Humanos (RH)** desenvolvido para a **Meta Consultoria de RH**. Esse sistema permite cadastrar empresas clientes, gerenciar contratos e combos de serviços, e monitorar os colaboradores de cada cliente e os vencimentos de contrato.
+
 
 Projeto desenvolvido em Django com foco na validação da funcionalidade principal do sistema de consultorias e administração de contratos.
+
 
 ---
 
@@ -57,8 +59,8 @@ Antes de começar, você vai precisar ter instalado:
 
 ### 1️⃣ Clone o repositório
 ```bash
-git clone https://github.com/almeidassszzz/mmeta_consultancy_system.git
-cd mmeta_consultancy_system
+git clone https://github.com/almeidassszzz/meta_consultancy_system.git
+cd meta_consultancy_system
 ```
 
 ### 2️⃣ Crie e ative um ambiente virtual
@@ -120,8 +122,8 @@ Gerenciamento avançado via painel administrativo.
 
 # 🗂️ Estrutura de Arquivos (Principais)
 ```text
-mmeta_consultancy_system/
-├── Sistema_de_Consultoria_da_Mmeta/
+meta_consultancy_system/
+├── Sistema_de_Consultoria_da_Meta/
 │   ├── Sistema/                 # App principal
 │   │   ├── static/
 │   │   │   └── css/             # Arquivos CSS
@@ -169,7 +171,7 @@ Este projeto está licenciado sob a  ![License](https://img.shields.io/badge/Lic
 
 Desenvolvido por:
 
-- Adrielly Kerolyn
+- Adrielly Souza
 
 - Aline Marins
 
