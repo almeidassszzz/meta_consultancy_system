@@ -122,5 +122,5 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_URL = 'entrar'
-LOGIN_REDIRECT_URL = 'painel'
+LOGIN_REDIRECT_URL = 'painel/'
 LOGOUT_REDIRECT_URL = 'index'

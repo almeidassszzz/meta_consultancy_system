@@ -23,12 +23,12 @@
         </tr>
       </thead>
       <tbody>
-        {% for Cliente in clientes %}
+        {% for Cliente in Clientes %}
         <tr>
-          <td>{{ cliente.nome }}</td>
-          <td>{{ cliente.cnpj }}</td>
-          <td>{{ cliente.vinculo }}</td>
-          <td>{{ cliente.status }}</td>
+          <td>{{ Cliente.nome }}</td>
+          <td>{{ Cliente.cnpj }}</td>
+          <td>{{ Cliente.vinculo }}</td>
+          <td>{{ Cliente.status }}</td>
           <td>
             <button class="btn" disabled>Editar</button>
             <button class="btn btn-danger" disabled>Excluir</button>

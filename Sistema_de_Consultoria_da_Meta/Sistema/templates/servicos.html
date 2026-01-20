@@ -8,32 +8,31 @@
 {% block content %}
 <div class="container">
 
-  <h1>Gestão dos Contratos</h1>
+  <h1>Gestão de Serviços</h1>
 
   <div class="table-container">
     <table class="table">
       <thead>
         <tr>
-          <th>Código</th>
+          <th>Seriço</th>
           <th>Cliente</th>
-          <th>CNPJ</th>
-          <th>Serviço</th>
+          <th>Contrato</th>
           <th>Status</th>
         </tr>
       </thead>
 
       <tbody>
-        {% for contrato in Contratos %}
+        {% for Serviço in Serviços %}
         <tr>
-          <td>{{ contrato.id }}</td>
-          <td>{{ contrato.cliente.nome }}</td>
-          <td>{{ contrato.cliente.cnpj }}</td>
-          <td>{{ contrato.servico.nome }}</td>
-          <td>{{ contrato.status }}</td>
+          <td>{{ Serviço.nome }}</td>
+          <td>{{ Serviço.preço_base }}</td>
+          <td>{{ Serviço.Cliente.cnpj }}</td>
+          <td>{{ Serviço.Contrato.id }}</td>
+          <td>{{ Serviço.status }}</td>
         </tr>
         {% empty %}
         <tr>
-          <td colspan="5">Nenhum contrato cadastrado.</td>
+          <td colspan="5">Nenhum serviço encontrado ;[.</td>
         </tr>
         {% endfor %}
       </tbody>
