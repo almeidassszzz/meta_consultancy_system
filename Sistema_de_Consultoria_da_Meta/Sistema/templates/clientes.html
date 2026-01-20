@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block nav_links %}
+ <li><a href="{% url 'painel' %}">Voltar ao Painel</a></li>
+  <li><a href="{% url 'logout' %}">Sair</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Gerenciar Clientes</h1>
+  <p>Clientes vinculados ao sistema:</p>
+
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Serviço</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for Cliente in clientes %}
+        <tr>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.cnpj }}</td>
+          <td>{{ cliente.vinculo }}</td>
+          <td>{{ cliente.status }}</td>
+          <td>
+            <button class="btn" disabled>Editar</button>
+            <button class="btn btn-danger" disabled>Excluir</button>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">Nenhum cliente encontrado ;[.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
