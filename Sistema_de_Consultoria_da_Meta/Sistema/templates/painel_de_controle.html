@@ -1,21 +1,33 @@
 {% extends 'base.html' %}
 
 {% block nav_links %} 
-  <li><a href="{% url 'logout' %}">Sair</a></li> <!--- Link para logout/sair -->
+  <li><a href="{% url 'logout' %}">Sair</a></li> <!-- Link para logout -->
 {% endblock %} 
 
 {% block content %} 
+<div class="container">
   <h1>Painel de Controle</h1>
 
-  <p>Olá! Bem-vindo ao Painel de Controle! Aqui você pode verificar vínculos antigos e novos com clientes, 
-     gerenciar os contratos vinculados a nossa empresa e criar novos usuários para que os nossos funcionários 
-     também consigam acessar o Painel de Controle!
+  <p>Olá! Bem-vindo ao Painel de Controle! Aqui você pode gerenciar clientes, serviços e contratos, 
+     além de criar novos usuários para que os funcionários também acessem o sistema.
   </p>
 
   <ul class="options-list">
+    <!-- Administração -->
     <li><a href="/admin/">Página de Administração</a></li>
+
+    <!-- Listagens -->
     <li><a href="{% url 'clientes' %}">Clientes Registrados</a></li>
+    <li><a href="{% url 'contratos' %}">Contratos Registrados</a></li>
     <li><a href="{% url 'gerenciar_contratos' %}">Gerenciar Contratos</a></li>
-    <li><a href="{% url 'registro' %}">Criar Login de Funcionário</a></li> <!-- Para criar login de novos funcionários --> 
+
+    <!-- CRUD: Cadastro -->
+    <li><a href="{% url 'cadastrar_cliente' %}">Cadastrar Cliente</a></li>
+    <li><a href="{% url 'cadastrar_servico' %}">Cadastrar Serviço</a></li>
+    <li><a href="{% url 'cadastrar_contrato' %}">Cadastrar Contrato</a></li>
+
+    <!-- Usuários -->
+    <li><a href="{% url 'registro' %}">Criar Login de Funcionário</a></li>
   </ul>
+</div>
 {% endblock %}

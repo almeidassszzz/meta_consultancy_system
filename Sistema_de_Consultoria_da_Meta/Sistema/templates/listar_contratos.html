@@ -10,15 +10,15 @@
 
 {% block content %}
 <div class="container">
-  <h1>Cadastrar Serviço</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Cadastrar Serviço</button>
-  </form>
-
-  {% if mensagem_sucesso %}
-    <p style="color: green;">{{ mensagem_sucesso }}</p>
+  <h1>Contratos Registrados</h1>
+  {% if contratos %}
+    <ul>
+      {% for contrato in contratos %}
+        <li>{{ contrato }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Nenhum contrato cadastrado.</p>
   {% endif %}
 </div>
 {% endblock %}

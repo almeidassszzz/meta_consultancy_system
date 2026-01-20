@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block nav_links %}
- <li><a href="{% url 'painel' %}">Voltar ao Painel</a></li>
+<li><a href="{% url 'painel' %}">Painel de Controle</a></li>
+<li><a href="{% url 'clientes' %}">Clientes Registrados</a></li>
+<li><a href="{% url 'gerenciar_contratos' %}">Gerenciar Contratos</a></li>
+<li><a href="{% url 'registro' %}">Criar Login de Funcionário</a></li>
+<li><a href="{% url 'logout' %}">Sair</a></li>
 {% endblock %}
 
 {% block content %}
@@ -12,8 +16,10 @@
     {{ form.as_p }}
     <button type="submit">Cadastrar Cliente</button>
   </form>
+
   {% if mensagem_sucesso %}
     <p style="color: green;">{{ mensagem_sucesso }}</p>
   {% endif %}
 </div>
 {% endblock %}
+
