@@ -20,14 +20,14 @@
     <label>Cliente:</label>
     <select name="cliente" required>
       {% for cliente in clientes %}
-        <option value="{{ cliente.id }}">{{ Cliente.nome }}</option>
+        <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
       {% endfor %}
     </select><br>
 
     <label>Serviço:</label>
     <select name="servico" required>
       {% for servico in servicos %}
-        <option value="{{ servico.id }}">{{ Servico.nome }}</option>
+        <option value="{{ servico.id }}">{{ servico.nome }}</option>
       {% endfor %}
     </select><br>
 
