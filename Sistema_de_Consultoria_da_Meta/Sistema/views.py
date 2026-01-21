@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth.decorators import login_required
 from .forms import ClienteForm, RegistroForm, ServicoForm, ContratoForm
@@ -15,25 +14,21 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-
+#inicio
 def index(request):
     return render(request, 'index.html', {}) 
 
-#base pra gente trabalhar em cima
 
+#listagens
 def listar_servicos(request):
     servicos = Servico.objects.all()
     servicos_contratados = [f"{s.nome}" for s in servicos]
     return render(request, 'listar_servicos.html', {'servicos': servicos_contratados})
 
-# views.py
-
 def listar_clientes(request):
     clientes = Cliente.objects.all()
-    # pega o atributo correto
     clientela = [c.nome for c in clientes]
     return render(request, 'listar_clientes.html', {'clientes': clientela})
-
 
 def listar_contratos(request):
     contratos = Contrato.objects.all()
@@ -44,6 +39,7 @@ def listar_contratos(request):
     return render(request, 'listar_contratos.html', {'contratos': contratos_feitos})
 
 
+#login
 def entrar(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -53,15 +49,13 @@ def entrar(request):
 
         if user is not None:
             auth_login(request, user)
-            return redirect('painel')  # Redireciona para o painel
+            return redirect('painel')
         else:
             messages.error(request, "Usuário ou senha inválidos!")
             return render(request, 'registration/login.html')
-
-    # Se for GET, apenas renderiza o formulário de login
     return render(request, 'registration/login.html')
 
-
+#painel
 @login_required(login_url = 'entrar')
 def painel_de_controle(request):
     return render(request, 'painel_de_controle.html', {}) 
@@ -83,16 +77,12 @@ def cadastro_de_clientes(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
         
-        if form.is_valid():
-
+        if form.is_valid(): 
             cliente_salvo = form.save()
-            
             mensagem_sucesso = f"Cliente '{cliente_salvo.nome}' cadastrado com sucesso!"
-            
             form = ClienteForm()
 
     else:
-
         form = ClienteForm()
 
     context = {
@@ -111,15 +101,10 @@ def cadastro_de_servicos(request):
         form = ServicoForm(request.POST)
         
         if form.is_valid():
-
             servico_salvo = form.save()
-            
             mensagem_sucesso = f"Serviço '{servico_salvo.nome}' cadastrado com sucesso!"
-            
             form = ServicoForm()
-
     else:
-
         form = ServicoForm()
 
     context = {
@@ -132,7 +117,6 @@ def cadastro_de_servicos(request):
 
 @login_required 
 def cadastro_de_contratos(request):
-    # Pegar os clientes e serviços para popular o select do formulário
     clientes = Cliente.objects.all()
     servicos = Servico.objects.all()
 
@@ -144,7 +128,6 @@ def cadastro_de_contratos(request):
         data_inicio = request.POST.get('data_inicio')
         data_fim = request.POST.get('data_fim')
 
-        # Buscar os objetos Cliente e Servico
         try:
             cliente = Cliente.objects.get(id=cliente_id)
             servico = Servico.objects.get(id=servico_id)
@@ -155,14 +138,13 @@ def cadastro_de_contratos(request):
             messages.error(request, "Serviço não encontrado.")
             return redirect('cadastrar_contrato')
 
-        # Criar o contrato
         contrato_salvo = Contrato.objects.create(
-            codigo=codigo,
-            cliente=cliente,
-            servico=servico,
-            valor_negociado=valor_negociado,
-            data_inicio=data_inicio,
-            data_fim=data_fim
+            codigo = codigo,
+            cliente = cliente,
+            servico = servico,
+            valor_negociado = valor_negociado,
+            data_inicio = data_inicio,
+            data_fim = data_fim
         )
 
         # Mostrar mensagem de sucesso usando campo existente
