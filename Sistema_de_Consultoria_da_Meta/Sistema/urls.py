@@ -12,6 +12,8 @@ urlpatterns = [
 
     path('contratos/gerenciar', views.gerenciar_contrato, name = 'gerenciar_contratos'),
 
+    path('contratos/gerenciar/editar/<int:contrato_id>', views.editar_contrato, name = 'editar_contrato'),
+
     path('accounts/login/', views.entrar, name = 'entrar'),
 
     path('registro/', views.RegistroUser.as_view(), name = 'registro'),

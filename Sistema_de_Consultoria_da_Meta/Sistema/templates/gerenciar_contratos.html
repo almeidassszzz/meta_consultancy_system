@@ -6,6 +6,29 @@
 {% endblock %}
 
 {% block content %}
+
+<style>
+  /* html e css nao eh coisa divina */
+  a.btn{
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    background: #0d6efd;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a.btn:hover{
+    filter: brightness(0.95);
+  }
+
+  /* fiquei 1h aqui editando com prompt isso nao eh normal */
+  button.btn{
+    width: auto;
+  }
+</style>
+
+
 <div class="container">
 
   <h1>Gerenciar Contratos</h1>
@@ -22,6 +45,7 @@
           <th>Ações</th>
         </tr>
       </thead>
+
       <tbody>
         {% for contrato in contratos %}
         <tr>
@@ -29,15 +53,22 @@
           <td>{{ contrato.cliente }}</td>
           <td>{{ contrato.servico }}</td>
           <td>{{ contrato.status }}</td>
+
           <td>
-            <button class="btn" disabled>Editar</button>
-            <button class="btn btn-danger" disabled>Excluir</button>
+            <a class="btn" href="{% url 'editar_contrato' contrato.id %}">Editar</a>
+
+            <form method="post" style="display:inline;">
+              {% csrf_token %}
+            <input type="hidden" name="action" value="excluir">
+            <input type="hidden" name="contrato_id" value="{{ contrato.id }}">
+            <button type="submit" class="btn btn-danger">Excluir</button>
+            </form>
           </td>
         </tr>
         {% empty %}
-        <tr>
-          <td colspan="5">Nenhum contrato cadastrado.</td>
-        </tr>
+          <tr>
+            <td colspan="5">Nenhum contrato cadastrado.</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>

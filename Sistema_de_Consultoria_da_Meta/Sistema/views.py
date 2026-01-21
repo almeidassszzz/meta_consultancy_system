@@ -11,7 +11,7 @@ from django.shortcuts import render
 from .models import Contrato, Cliente, Servico
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib import messages
 
 #inicio
@@ -20,16 +20,19 @@ def index(request):
 
 
 #listagens
+@login_required
 def listar_servicos(request):
     servicos = Servico.objects.all()
     servicos_contratados = [f"{s.nome}" for s in servicos]
     return render(request, 'listar_servicos.html', {'servicos': servicos_contratados})
 
+@login_required
 def listar_clientes(request):
     clientes = Cliente.objects.all()
     clientela = [c.nome for c in clientes]
     return render(request, 'listar_clientes.html', {'clientes': clientela})
 
+@login_required
 def listar_contratos(request):
     contratos = Contrato.objects.all()
     contratos_feitos = [
@@ -45,7 +48,7 @@ def entrar(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username = username, password = password)
 
         if user is not None:
             auth_login(request, user)
@@ -65,9 +68,35 @@ def deslogar(request):
     logout(request)
     return redirect('entrar')
 
-#gerenciar contratos
+#gerenciar contratos ESTRUTURADA
+@login_required
 def gerenciar_contrato(request):
-    return render(request, 'gerenciar_contratos.html')
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        contrato_id = request.POST.get('contrato_id')
+
+
+        if action == 'excluir' and contrato_id:
+            contrato = get_object_or_404(Contrato, id = contrato_id)
+            contrato.delete()
+            return redirect('gerenciar_contratos')
+    
+    contratos = Contrato.objects.select_related('cliente', 'servico').all()
+    return render(request, 'gerenciar_contratos.html', {'contratos': contratos})
+
+#editar contratos criada
+@login_required
+def editar_contrato(request, contrato_id):
+    contrato = get_object_or_404(Contrato, id = contrato_id)
+
+    if request.method == 'POST':
+        contrato.valor_negociado = request.POST.get('valor_negociado')
+        contrato.data_inicio = request.POST.get('data_inicio')
+        contrato.data_fim = request.POST.get('data_fim')
+        contrato.save()
+        redirect('gerenciar_contratos')
+
+    return render(request, 'editar_contrato.html', {'contrato': contrato})
 
 
 @login_required 
