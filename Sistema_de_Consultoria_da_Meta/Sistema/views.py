@@ -90,7 +90,7 @@ def cadastro_de_clientes(request):
         'mensagem_sucesso': mensagem_sucesso
     }
 
-    return render(request, 'cadastro_cliente.html', context)
+    return render(request, 'registration/cadastro_cliente.html', context)
 
 
 @login_required 
@@ -112,7 +112,7 @@ def cadastro_de_servicos(request):
         'mensagem_sucesso': mensagem_sucesso
     }
 
-    return render(request, 'cadastro_servico.html', context)
+    return render(request, 'registration/cadastro_servico.html', context)
 
 
 @login_required 
@@ -154,7 +154,7 @@ def cadastro_de_contratos(request):
         return redirect('gerenciar_contratos')  # Redireciona para a página de contratos
 
     # Se for GET, apenas renderiza o formulário
-    return render(request, 'cadastro_contrato.html', {
+    return render(request, 'registration/cadastro_contrato.html', {
         'clientes': clientes,
         'servicos': servicos
     })
