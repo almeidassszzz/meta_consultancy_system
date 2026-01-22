@@ -23,13 +23,13 @@ def index(request):
 @login_required
 def listar_servicos(request):
     servicos = Servico.objects.all()
-    servicos_contratados = [f"{s.nome}" for s in servicos]
+    servicos_contratados = [f"{s.nome} - R$ {s.preco_base:.2f}" for s in servicos]
     return render(request, 'listar_servicos.html', {'servicos': servicos_contratados})
 
 @login_required
 def listar_clientes(request):
     clientes = Cliente.objects.all()
-    clientela = [c.nome for c in clientes]
+    clientela = [f'{c.nome} - CNPJ: {c.cnpj}' for c in clientes]
     return render(request, 'listar_clientes.html', {'clientes': clientela})
 
 @login_required
@@ -176,13 +176,11 @@ def cadastro_de_contratos(request):
             data_fim = data_fim
         )
 
-        # Mostrar mensagem de sucesso usando campo existente
         mensagem_sucesso = f"Contrato '{contrato_salvo.codigo}' registrado com sucesso!"
         messages.success(request, mensagem_sucesso)
 
         return redirect('gerenciar_contratos')  # Redireciona para a página de contratos
 
-    # Se for GET, apenas renderiza o formulário
     return render(request, 'registration/cadastro_contrato.html', {
         'clientes': clientes,
         'servicos': servicos

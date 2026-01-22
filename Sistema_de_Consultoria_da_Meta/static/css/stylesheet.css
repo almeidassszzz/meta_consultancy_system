@@ -266,3 +266,6 @@ footer {
 }
 
 
+label[for$="cnpj"] {
+  text-transform: uppercase;
+}
