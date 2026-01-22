@@ -59,9 +59,41 @@ def entrar(request):
     return render(request, 'registration/login.html')
 
 #painel
-@login_required(login_url = 'entrar')
+@login_required(login_url='entrar')
 def painel_de_controle(request):
-    return render(request, 'painel_de_controle.html', {}) 
+    hoje = date.today()
+    limite = hoje + timedelta(days=7)
+
+    contratos = Contrato.objects.all()
+
+    contratos_vencendo = contratos.filter(
+        data_fim__gte=hoje,
+        data_fim__lte=limite
+    )
+
+    contratos_vencidos = contratos.filter(
+        data_fim__lt=hoje
+    )
+
+    contratos_ativos = contratos.filter(
+        data_fim__gte=hoje
+    )
+
+    context = {
+        # alertas (você já usa)
+        'contratos_vencendo': contratos_vencendo,
+        'contratos_vencidos': contratos_vencidos,
+
+        # dashboard números
+        'total_contratos': contratos.count(),
+        'contratos_ativos': contratos_ativos.count(),
+        'total_vencidos': contratos_vencidos.count(),
+        'total_vencendo': contratos_vencendo.count(),
+        'total_clientes': Cliente.objects.count(),
+        'total_servicos': Servico.objects.count(),
+    }
+
+    return render(request, 'painel_de_controle.html', context) 
 
 #logout
 def deslogar(request):
@@ -198,4 +230,5 @@ class RegistroUser(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
+
         return redirect(self.success_url)
