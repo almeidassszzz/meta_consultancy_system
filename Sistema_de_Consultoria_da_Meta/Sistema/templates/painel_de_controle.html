@@ -8,6 +8,67 @@
 <div class="container">
   <h1>Painel de Controle</h1>
 
+<div style="display: flex; gap: 15px; flex-wrap: wrap; margin: 20px 0;">
+
+  <div style="background: #f1f1f1; padding: 15px; border-radius: 8px; min-width: 200px;">
+    <h3>📄 Contratos</h3>
+    <p>Total: <strong>{{ total_contratos }}</strong></p>
+    <p>Ativos: <strong>{{ contratos_ativos }}</strong></p>
+  </div>
+
+  <div style="background: #fff3cd; padding: 15px; border-radius: 8px; min-width: 200px;">
+    <h3>⚠️ Atenção</h3>
+    <p>Vencendo: <strong>{{ total_vencendo }}</strong></p>
+    <p>Vencidos: <strong>{{ total_vencidos }}</strong></p>
+  </div>
+
+  <div style="background: #e7f1ff; padding: 15px; border-radius: 8px; min-width: 200px;">
+    <h3>👥 Clientes</h3>
+    <p>Total: <strong>{{ total_clientes }}</strong></p>
+  </div>
+
+  <div style="background: #e6f4ea; padding: 15px; border-radius: 8px; min-width: 200px;">
+    <h3>🛠️ Serviços</h3>
+    <p>Total: <strong>{{ total_servicos }}</strong></p>
+  </div>
+
+</div>
+
+
+<!-- 🔔 ALERTAS DE CONTRATOS -->
+  {% if contratos_vencendo %}
+  <div style="border-left: 6px solid orange; background: #fff3cd; padding: 15px; margin: 15px 0;">
+    <h3>⚠️ Contratos próximos do vencimento</h3>
+    <ul>
+      {% for contrato in contratos_vencendo %}
+  <li>
+    <a href="{% url 'editar_contrato' contrato.id %}">
+      <strong>{{ contrato.codigo }}</strong>
+    </a>
+    — {{ contrato.cliente }} |
+    vence em {{ contrato.data_fim|date:"d/m/Y" }}
+  </li>
+{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if contratos_vencidos %}
+  <div style="border-left: 6px solid red; background: #f8d7da; padding: 15px; margin: 15px 0;">
+    <h3>⛔ Contratos vencidos</h3>
+    <ul>
+      {% for contrato in contratos_vencidos %}
+        <li>
+          <strong>{{ contrato.codigo }}</strong> —
+          {{ contrato.cliente }} |
+          venceu em {{ contrato.data_fim|date:"d/m/Y" }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <!-- 🔔 FIM DOS ALERTAS -->
+
   <p>Olá! Bem-vindo ao Painel de Controle! Aqui você pode gerenciar clientes, serviços e contratos, 
      além de criar novos usuários para que os funcionários também acessem o sistema.
   </p>
@@ -30,3 +91,4 @@
   </ul>
 </div>
 {% endblock %}
+
