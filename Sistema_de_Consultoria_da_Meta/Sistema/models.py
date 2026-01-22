@@ -30,12 +30,11 @@ class Contrato(models.Model):
         data_limpa = super().clean()
         data_inicio = data_limpa.get('data_inicio')
         data_fim = data_limpa.get('data_fim')
-
-        if data_inicio and data_fim:
-            if data_inicio and data_fim:
-                raise ValidationError({
-                    'data_inicio': 'A data final não pode ser anterior a data inicial.'
-                })
+        
+        if data_inicio < data_fim:
+            raise ValidationError({
+                'data_inicio': 'A data final não pode ser anterior a data inicial.'
+            })
         return data_limpa
     
     def status(self):
