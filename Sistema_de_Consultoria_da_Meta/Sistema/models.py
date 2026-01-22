@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.core.exceptions import ValidationError
 
 class Cliente(models.Model):
     nome = models.CharField(max_length = 255, unique = True)
@@ -10,7 +11,7 @@ class Cliente(models.Model):
 
 
 class Servico(models.Model):
-    nome = models.CharField(max_length = 100, unique = True)
+    nome = models.CharField(max_length = 70, unique = True)
     preco_base = models.DecimalField(max_digits = 10, decimal_places = 2)
 
     def __str__(self):
@@ -25,6 +26,18 @@ class Contrato(models.Model):
     data_inicio = models.DateField()
     data_fim = models.DateField()
 
+    def limpando_data(self):
+        data_limpa = super().clean()
+        data_inicio = data_limpa.get('data_inicio')
+        data_fim = data_limpa.get('data_fim')
+
+        if data_inicio and data_fim:
+            if data_inicio and data_fim:
+                raise ValidationError({
+                    'data_inicio': 'A data final não pode ser anterior a data inicial.'
+                })
+        return data_limpa
+    
     def status(self):
         return "VIGENTE" if date.today() <= self.data_fim else "FINALIZADO"
 

@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib import messages
+from datetime import date, timedelta
 
 #inicio
 def index(request):
@@ -106,7 +107,6 @@ def gerenciar_contrato(request):
     if request.method == 'POST':
         action = request.POST.get('action')
         contrato_id = request.POST.get('contrato_id')
-
 
         if action == 'excluir' and contrato_id:
             contrato = get_object_or_404(Contrato, id = contrato_id)
