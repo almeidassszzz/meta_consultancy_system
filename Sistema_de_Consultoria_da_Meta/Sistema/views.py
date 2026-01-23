@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib import messages
 from datetime import date, timedelta
+from django.core.exceptions import ValidationError
+from datetime import datetime
 
 #inicio
 def index(request):
@@ -45,9 +47,9 @@ def listar_contratos(request):
 
 #login
 def entrar(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         user = authenticate(request, username = username, password = password)
 
@@ -55,12 +57,12 @@ def entrar(request):
             auth_login(request, user)
             return redirect('painel')
         else:
-            messages.error(request, "Usuário ou senha inválidos!")
+            messages.error(request, 'Usuário ou senha inválidos!')
             return render(request, 'registration/login.html')
     return render(request, 'registration/login.html')
 
 #painel
-@login_required(login_url='entrar')
+@login_required(login_url = 'entrar')
 def painel_de_controle(request):
     hoje = date.today()
     limite = hoje + timedelta(days=7)
@@ -81,11 +83,10 @@ def painel_de_controle(request):
     )
 
     context = {
-        # alertas (você já usa)
         'contratos_vencendo': contratos_vencendo,
         'contratos_vencidos': contratos_vencidos,
 
-        # dashboard números
+  
         'total_contratos': contratos.count(),
         'contratos_ativos': contratos_ativos.count(),
         'total_vencidos': contratos_vencidos.count(),
@@ -193,25 +194,37 @@ def cadastro_de_contratos(request):
             cliente = Cliente.objects.get(id=cliente_id)
             servico = Servico.objects.get(id=servico_id)
         except Cliente.DoesNotExist:
-            messages.error(request, "Cliente não encontrado.")
+            messages.error(request, 'Cliente não encontrado.')
             return redirect('cadastrar_contrato')
         except Servico.DoesNotExist:
-            messages.error(request, "Serviço não encontrado.")
+            messages.error(request, 'Serviço não encontrado.')
             return redirect('cadastrar_contrato')
 
-        contrato_salvo = Contrato.objects.create(
-            codigo = codigo,
-            cliente = cliente,
-            servico = servico,
-            valor_negociado = valor_negociado,
-            data_inicio = data_inicio,
-            data_fim = data_fim
-        )
+        try:
+            data_inicio_dt = datetime.strptime(data_inicio, '%Y-%m-%d').date()
+            data_fim_dt = datetime.strptime(data_fim, '%Y-%m-%d').date()
+
+            contrato_salvo = Contrato(
+                codigo = codigo,
+                cliente = cliente,
+                servico = servico,
+                valor_negociado = valor_negociado,
+                data_inicio = data_inicio_dt,
+                data_fim = data_fim_dt
+            )
+            contrato_salvo.full_clean()
+            contrato_salvo.save()  
+
+        except ValidationError as e:
+            for field, errs in e.message_dict.items():
+                for err in errs:
+                    messages.error(request, err)
+            return redirect('cadastrar_contrato')
 
         mensagem_sucesso = f"Contrato '{contrato_salvo.codigo}' registrado com sucesso!"
         messages.success(request, mensagem_sucesso)
 
-        return redirect('gerenciar_contratos')  # Redireciona para a página de contratos
+        return redirect('gerenciar_contratos') 
 
     return render(request, 'registration/cadastro_contrato.html', {
         'clientes': clientes,

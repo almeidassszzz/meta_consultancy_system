@@ -20,26 +20,22 @@ class Servico(models.Model):
 
 class Contrato(models.Model):
     codigo = models.CharField(max_length = 20, unique = True)
-    cliente = models.ForeignKey(Cliente, on_delete = models.PROTECT)
-    servico = models.ForeignKey(Servico, on_delete = models.PROTECT)
+    cliente = models.ForeignKey('Cliente', on_delete = models.PROTECT)
+    servico = models.ForeignKey('Servico', on_delete = models.PROTECT)
     valor_negociado = models.DecimalField(max_digits = 10, decimal_places = 2)
     data_inicio = models.DateField()
     data_fim = models.DateField()
 
-    def limpando_data(self):
-        data_limpa = super().clean()
-        data_inicio = data_limpa.get('data_inicio')
-        data_fim = data_limpa.get('data_fim')
+    def clean(self):
+        if self.data_inicio and self.data_fim and self.data_fim < self.data_inicio:
+            raise ValidationError({'data_fim': 'A data final não pode ser anterior à data inicial.'})
+
         
-        if data_inicio < data_fim:
-            raise ValidationError({
-                'data_inicio': 'A data final não pode ser anterior a data inicial.'
-            })
-        return data_limpa
-    
+        if self.data_fim and self.data_fim < date.today():
+            raise ValidationError({'data_fim': 'A data final não pode ser no passado.'})
+
     def status(self):
         return "VIGENTE" if date.today() <= self.data_fim else "FINALIZADO"
 
     def __str__(self):
         return self.codigo
-

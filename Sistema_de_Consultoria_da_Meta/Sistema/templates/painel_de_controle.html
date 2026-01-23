@@ -53,23 +53,20 @@
   </div>
   {% endif %}
 
-  {% for contrato in contratos_vencidos %}
-    {if contrato_vencido = True}
-    <div style="border-left: 6px solid red; background: #f8d7da; padding: 15px; margin: 15px 0;">
-      <h3>⛔ Contratos vencidos</h3>
-      <ul>
+{% if contratos_vencidos %}
+<div style="border-left: 6px solid red; background: #f8d7da; padding: 15px; margin: 15px 0;">
+    <h3>🚫 Contratos vencidos</h3>
+    <ul>
         {% for contrato in contratos_vencidos %}
-          <li>
+        <li>
             <strong>{{ contrato.codigo }}</strong> —
             {{ contrato.cliente }} |
             venceu em {{ contrato.data_fim|date:"d/m/Y" }}
-          </li>
+        </li>
         {% endfor %}
-    {% endif % }
-  {% endfor %}
     </ul>
-  </div>
-
+</div>
+{% endif %}
 
   <!-- 🔔 FIM DOS ALERTAS -->
 
