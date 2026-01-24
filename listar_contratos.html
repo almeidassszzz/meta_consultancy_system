@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block nav_links %}
+<li><a href="{% url 'painel' %}">Painel de Controle</a></li>
+<li><a href="{% url 'contratos' %}">Contratos</a></li>
+<li><a href="{% url 'gerenciar_contratos' %}">Gerenciar</a></li>
+<li><a href="{% url 'cadastrar_contrato' %}">Novo Contrato</a></li>
+<li><a href="{% url 'logout' %}">Sair</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>Contratos Registrados</h1>
+    <a href="{% url 'cadastrar_contrato' %}" class="btn btn-primary">+ Novo Contrato</a>
+  </div>
+
+  {% if contratos %}
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Cliente</th>
+            <th>Serviço</th>
+            <th>Valor Negociado</th>
+            <th>Data Início</th>
+            <th>Data Fim</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contrato in contratos %}
+            <tr>
+              <td><strong>{{ contrato.codigo }}</strong></td>
+              <td>{{ contrato.cliente.nome }}</td>
+              <td>{{ contrato.servico.nome }}</td>
+              <td>R$ {{ contrato.valor_negociado|floatformat:2 }}</td>
+              <td>{{ contrato.data_inicio|date:"d/m/Y" }}</td>
+              <td>{{ contrato.data_fim|date:"d/m/Y" }}</td>
+              <td>
+                {% if contrato.status == "VIGENTE" %}
+                  <span class="badge badge-success">{{ contrato.status }}</span>
+                {% else %}
+                  <span class="badge badge-danger">{{ contrato.status }}</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">📄</div>
+      <h3>Nenhum contrato cadastrado</h3>
+      <p>Comece cadastrando seu primeiro contrato.</p>
+      <a href="{% url 'cadastrar_contrato' %}" class="btn btn-primary" style="margin-top: 1rem;">Cadastrar Contrato</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

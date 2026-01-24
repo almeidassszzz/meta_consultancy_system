@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block nav_links %}
+<li><a href="{% url 'painel' %}">Painel de Controle</a></li>
+<li><a href="{% url 'clientes' %}">Clientes</a></li>
+<li><a href="{% url 'gerenciar_contratos' %}">Gerenciar Contratos</a></li>
+<li><a href="{% url 'cadastrar_cliente' %}">Novo Cliente</a></li>
+<li><a href="{% url 'logout' %}">Sair</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>Clientes Registrados</h1>
+    <a href="{% url 'cadastrar_cliente' %}" class="btn btn-primary">+ Novo Cliente</a>
+  </div>
+
+  {% if clientes %}
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CNPJ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cliente in clientes %}
+            <tr>
+              <td><strong>{{ cliente.nome }}</strong></td>
+              <td>{{ cliente.cnpj }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">👥</div>
+      <h3>Nenhum cliente cadastrado</h3>
+      <p>Comece cadastrando seu primeiro cliente.</p>
+      <a href="{% url 'cadastrar_cliente' %}" class="btn btn-primary" style="margin-top: 1rem;">Cadastrar Cliente</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
