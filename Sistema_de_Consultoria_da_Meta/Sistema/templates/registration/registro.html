@@ -1,27 +1,75 @@
 {% extends 'base.html' %}
 
 {% block nav_links %}
-  <li><a href="{% url 'entrar' %}">Voltar</a></li>
+  <li><a href="{% url 'entrar' %}">Voltar ao Login</a></li>
 {% endblock %}
 
 {% block content %}
-<div class="register-wrapper" style="padding: 24px 16px;">
-  <div class="register-card" style="max-width: 420px; width: 100%; margin: 0 auto; background:#fff; padding:24px; border-radius:8px; box-shadow:0 8px 20px rgba(0,0,0,.08);">
-
+<div class="login-container">
+  <div class="login-card">
     <h1>Criar Nova Conta</h1>
+    <p class="login-subtitle">Registre-se para acessar o sistema</p>
 
     <form method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Usuário</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+          <div style="color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem;">
+            {{ form.username.errors }}
+          </div>
+        {% endif %}
+      </div>
 
-      <button type="submit">Cadastrar</button>
+      <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <div style="color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem;">
+            {{ form.email.errors }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">Senha</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+          <div style="color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem;">
+            {{ form.password1.errors }}
+          </div>
+        {% endif %}
+        {% if form.password1.help_text %}
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            {{ form.password1.help_text }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">Confirmar Senha</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+          <div style="color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem;">
+            {{ form.password2.errors }}
+          </div>
+        {% endif %}
+        {% if form.password2.help_text %}
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            {{ form.password2.help_text }}
+          </div>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-submit">Cadastrar</button>
     </form>
 
-    <p>
-      Já tem uma conta?
-      <a href="{% url 'entrar' %}">Faça o login aqui</a>
-    </p>
-
+    <div class="login-footer">
+      <p>Já tem uma conta? <a href="{% url 'entrar' %}">Faça o login aqui</a></p>
+    </div>
   </div>
 </div>
 {% endblock %}
+

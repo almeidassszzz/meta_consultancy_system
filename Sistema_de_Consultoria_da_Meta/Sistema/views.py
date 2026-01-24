@@ -62,7 +62,7 @@ def entrar(request):
     return render(request, 'registration/login.html')
 
 #painel
-@login_required(login_url = 'entrar')
+@login_required
 def painel_de_controle(request):
     hoje = date.today()
     limite = hoje + timedelta(days=7)
@@ -183,48 +183,50 @@ def cadastro_de_contratos(request):
     servicos = Servico.objects.all()
 
     if request.method == 'POST':
-        codigo = request.POST.get('codigo')
         cliente_id = request.POST.get('cliente')
         servico_id = request.POST.get('servico')
         valor_negociado = request.POST.get('valor_negociado')
         data_inicio = request.POST.get('data_inicio')
         data_fim = request.POST.get('data_fim')
 
+        last_contrato = Contrato.objects.order_by('-id').first()
+        new_number = 1
+        
+        if last_contrato and last_contrato.codigo.startswith('CONT-'):
+            try:
+                new_number = int(last_contrato.codigo.split('-')[1]) + 1
+            except (ValueError, IndexError):
+                pass
+        
+        codigo = f"CONT-{new_number:03d}"
+        
+        while Contrato.objects.filter(codigo=codigo).exists():
+            new_number += 1
+            codigo = f"CONT-{new_number:03d}"
+
         try:
             cliente = Cliente.objects.get(id=cliente_id)
             servico = Servico.objects.get(id=servico_id)
         except Cliente.DoesNotExist:
-            messages.error(request, 'Cliente não encontrado.')
+            messages.error(request, "Cliente não encontrado.")
             return redirect('cadastrar_contrato')
         except Servico.DoesNotExist:
-            messages.error(request, 'Serviço não encontrado.')
+            messages.error(request, "Serviço não encontrado.")
             return redirect('cadastrar_contrato')
 
-        try:
-            data_inicio_dt = datetime.strptime(data_inicio, '%Y-%m-%d').date()
-            data_fim_dt = datetime.strptime(data_fim, '%Y-%m-%d').date()
-
-            contrato_salvo = Contrato(
-                codigo = codigo,
-                cliente = cliente,
-                servico = servico,
-                valor_negociado = valor_negociado,
-                data_inicio = data_inicio_dt,
-                data_fim = data_fim_dt
-            )
-            contrato_salvo.full_clean()
-            contrato_salvo.save()  
-
-        except ValidationError as e:
-            for field, errs in e.message_dict.items():
-                for err in errs:
-                    messages.error(request, err)
-            return redirect('cadastrar_contrato')
+        contrato_salvo = Contrato.objects.create(
+            codigo = codigo,
+            cliente = cliente,
+            servico = servico,
+            valor_negociado = valor_negociado,
+            data_inicio = data_inicio,
+            data_fim = data_fim
+        )
 
         mensagem_sucesso = f"Contrato '{contrato_salvo.codigo}' registrado com sucesso!"
         messages.success(request, mensagem_sucesso)
 
-        return redirect('gerenciar_contratos') 
+        return redirect('gerenciar_contratos')  # Redireciona para a página de contratos
 
     return render(request, 'registration/cadastro_contrato.html', {
         'clientes': clientes,

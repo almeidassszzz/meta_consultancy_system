@@ -2,23 +2,48 @@
 
 {% block nav_links %}
 <li><a href="{% url 'painel' %}">Painel de Controle</a></li>
-<li><a href="{% url 'clientes' %}">Clientes Registrados</a></li>
+<li><a href="{% url 'servicos' %}">Serviços</a></li>
 <li><a href="{% url 'gerenciar_contratos' %}">Gerenciar Contratos</a></li>
-<li><a href="{% url 'registro' %}">Criar Login de Funcionário</a></li>
 <li><a href="{% url 'logout' %}">Sair</a></li>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  <h1>Cadastrar Serviço</h1>
+  <div style="margin-bottom: 2rem;">
+    <a href="{% url 'painel' %}" class="btn btn-secondary" style="display: inline-block; margin-bottom: 1rem;">← Voltar</a>
+    <h1>Cadastrar Novo Serviço</h1>
+  </div>
+
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Cadastrar Serviço</button>
+    
+    <div class="form-group">
+      <label for="{{ form.nome.id_for_label }}">{{ form.nome.label }}</label>
+      {{ form.nome }}
+      {% if form.nome.errors %}
+        <div style="color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem;">
+          {{ form.nome.errors }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.preco_base.id_for_label }}">{{ form.preco_base.label }}</label>
+      {{ form.preco_base }}
+      {% if form.preco_base.errors %}
+        <div style="color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem;">
+          {{ form.preco_base.errors }}
+        </div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn-submit">Cadastrar Serviço</button>
   </form>
 
   {% if mensagem_sucesso %}
-    <p style="color: green;">{{ mensagem_sucesso }}</p>
+    <div class="alert alert-success" style="margin-top: 1.5rem;">
+      ✓ {{ mensagem_sucesso }}
+    </div>
   {% endif %}
 </div>
 {% endblock %}

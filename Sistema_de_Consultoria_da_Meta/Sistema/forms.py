@@ -43,9 +43,8 @@ class ContratoForm(forms.ModelForm):
         self.fields['servico'].empty_label = "Selecione um serviço"
 
 
-# Formulário de cadastro de usuário
 class RegistroForm(UserCreationForm):
-    email = forms.EmailField(required=True, help_text='Insira um email válido para prosseguir.')
+    email = forms.EmailField(required = True, help_text = 'Insira um email válido para prosseguir.')
     
     class Meta:  
         model = User
