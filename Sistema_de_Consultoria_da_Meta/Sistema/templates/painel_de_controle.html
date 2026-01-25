@@ -42,26 +42,29 @@
     </div>
   </div>
 
-  <!-- Alertas de Contratos -->
-  {% if contratos_vencendo %}
+<!-- Alertas de Contratos -->
+{% if contratos_vencendo %}
   <div class="alert alert-warning">
     <div style="font-size: 1.5rem;">⚠️</div>
+
     <div style="flex: 1;">
       <h3 style="margin: 0 0 0.5rem 0;">Contratos próximos do vencimento</h3>
+
       <ul style="margin: 0; padding-left: 1.5rem;">
         {% for contrato in contratos_vencendo %}
-        <li style="margin-bottom: 0.5rem;">
-          <a href="{% url 'editar_contrato' contrato.id %}" style="color: inherit; font-weight: 600; text-decoration: underline;">
-            <strong>{{ contrato.codigo }}</strong>
-          </a>
-          — {{ contrato.cliente.nome }} | 
-          Vence em <strong>{{ contrato.data_fim|date:"d/m/Y" }}</strong>
-        </li>
+          <li style="margin-bottom: 0.5rem;">
+            <a href="{% url 'editar_contrato' contrato.id %}"
+               style="color: inherit; font-weight: 600; text-decoration: underline;">
+              <strong>{{ contrato.codigo }}</strong>
+            </a>
+            — {{ contrato.cliente.nome }}
+            vence em <strong>{{ contrato.data_fim|date:"d/m/Y" }}</strong>
+          </li>
         {% endfor %}
       </ul>
     </div>
   </div>
-  {% endif %}
+{% endif %}
 
   {% if contratos_vencidos %}
   <div class="alert alert-danger">

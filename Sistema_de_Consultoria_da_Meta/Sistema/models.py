@@ -3,7 +3,7 @@ from datetime import date
 from django.core.exceptions import ValidationError
 
 class Cliente(models.Model):
-    nome = models.CharField(max_length = 255, unique = True)
+    nome = models.CharField(max_length = 40, unique = True)
     cnpj = models.CharField(max_length = 14, unique = True)
 
     def __str__(self):
@@ -11,18 +11,18 @@ class Cliente(models.Model):
 
 
 class Servico(models.Model):
-    nome = models.CharField(max_length = 70, unique = True)
-    preco_base = models.DecimalField(max_digits = 10, decimal_places = 2)
+    nome = models.CharField(max_length = 40, unique = True)
+    preco_base = models.DecimalField(max_digits = 6, decimal_places = 2)
 
     def __str__(self):
         return self.nome
 
 
 class Contrato(models.Model):
-    codigo = models.CharField(max_length = 15, unique = True)
+    codigo = models.CharField(max_length = 10, unique = True)
     cliente = models.ForeignKey('Cliente', on_delete = models.PROTECT)
     servico = models.ForeignKey('Servico', on_delete = models.PROTECT)
-    valor_negociado = models.DecimalField(max_digits = 10, decimal_places = 2)
+    valor_negociado = models.DecimalField(max_digits = 6, decimal_places = 2)
     data_inicio = models.DateField()
     data_fim = models.DateField()
 
