@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block nav_links %}
 <li><a href="{% url 'painel' %}">Painel de Controle</a></li>
@@ -28,7 +29,7 @@
           {% for servico in servicos %}
             <tr>
               <td><strong>{{ servico.nome }}</strong></td>
-              <td>R$ {{ servico.preco_base|floatformat:2 }}</td>
+              <td>R$ {{ servico.preco_base_formatar }}</td>
             </tr>
           {% endfor %}
         </tbody>

@@ -29,7 +29,18 @@ def index(request):
 @login_required
 def listar_servicos(request):
     servicos = Servico.objects.all()
+
+    for servico in servicos:
+        servico.preco_base_formatar = (
+            f'{servico.preco_base:,.2f}'
+            .replace(',', 'X')
+            .replace('.', ',')
+            .replace('X', '.')
+        )
+
     return render(request, 'listar_servicos.html', {'servicos': servicos})
+
+
 
 
 @login_required

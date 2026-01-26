@@ -28,7 +28,7 @@
           {% for cliente in clientes %}
             <tr>
               <td><strong>{{ cliente.nome }}</strong></td>
-              <td>{{ cliente.cnpj }}</td>
+              <td><strong>{{ cliente.cnpj|slice:":2" }}.{{ cliente.cnpj|slice:"2:5" }}.{{ cliente.cnpj|slice:"5:8" }}/{{ cliente.cnpj|slice:"8:12" }}-{{ cliente.cnpj|slice:"12:14" }} </strong></td>
             </tr>
           {% endfor %}
         </tbody>
