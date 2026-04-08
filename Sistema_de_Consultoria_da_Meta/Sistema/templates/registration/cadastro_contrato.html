@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block nav_links %}
+<li><a href="{% url 'painel' %}">Painel de Controle</a></li>
+<li><a href="{% url 'contratos' %}">Contratos</a></li>
+<li><a href="{% url 'gerenciar_contratos' %}">Gerenciar Contratos</a></li>
+<li><a href="{% url 'logout' %}">Sair</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div style="margin-bottom: 2rem;">
+    <a href="{% url 'painel' %}" class="btn btn-secondary" style="display: inline-block; margin-bottom: 1rem;">← Voltar</a>
+    <h1>Cadastrar Novo Contrato</h1>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <!-- <div class="form-group">
+      <label for="codigo">Código do Contrato:</label>
+      <input type="text" id="codigo" name="codigo" class="form-input" placeholder="Ex: CONT-001" required>
+    </div> -->
+
+    <div class="form-group">
+      <label for="cliente">Cliente:</label>
+      <select id="cliente" name="cliente" class="form-input" required>
+        <option value="">Selecione um cliente</option>
+        {% for cliente in clientes %}
+          <option value="{{ cliente.id }}">{{ cliente.nome }} - CNPJ: {{ cliente.cnpj }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="servico">Serviço:</label>
+      <select id="servico" name="servico" class="form-input" required>
+        <option value="">Selecione um serviço</option>
+        {% for servico in servicos %}
+          <option value="{{ servico.id }}">{{ servico.nome }} - R$ {{ servico.preco_base|floatformat:2 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="valor_negociado">Valor Negociado (R$):</label>
+      <input type="number" id="valor_negociado" name="valor_negociado" class="form-input" step="0.01" min="0" placeholder="Ex: 1500.00" required>
+    </div>
+
+    <div class="form-group">
+      <label for="data_inicio">Data de Início:</label>
+      <input type="date" id="data_inicio" name="data_inicio" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+      <label for="data_fim">Data de Fim:</label>
+      <input type="date" id="data_fim" name="data_fim" class="form-input" required>
+    </div>
+
+    <button type="submit" class="btn-submit">Cadastrar Contrato</button>
+  </form>
+</div>
+{% endblock %}

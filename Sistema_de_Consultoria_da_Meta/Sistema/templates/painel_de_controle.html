@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block nav_links %} 
+<li><a href="{% url 'logout' %}">Sair</a></li>
+{% endblock %} 
+
+{% block content %} 
+<div class="container">
+  <h1>Painel de Controle</h1>
+  <p style="color: var(--text-secondary); margin-bottom: 2rem;">Bem-vindo(a)! Utilize o Painel de Controle para gerenciar clientes, serviços e contratos através do sistema.</p>
+
+  <!-- Dashboard Cards -->
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <h3>📄 Contratos</h3>
+      <div class="value">{{ total_contratos }}</div>
+      <div class="label">Total de Contratos</div>
+      <div style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.9;">
+        <strong>{{ contratos_ativos }}</strong> ativos
+      </div>
+    </div>
+
+    <div class="dashboard-card warning">
+      <h3>⚠️ Atenção</h3>
+      <div class="value">{{ total_vencendo }}</div>
+      <div class="label">Vencendo em 7 dias</div>
+      <div style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.9;">
+        <strong>{{ total_vencidos }}</strong> vencidos
+      </div>
+    </div>
+
+    <div class="dashboard-card info">
+      <h3>👥 Clientes</h3>
+      <div class="value">{{ total_clientes }}</div>
+      <div class="label">Clientes Cadastrados</div>
+    </div>
+
+    <div class="dashboard-card success">
+      <h3>🛠️ Serviços</h3>
+      <div class="value">{{ total_servicos }}</div>
+      <div class="label">Serviços Disponíveis</div>
+    </div>
+  </div>
+
+<!-- Alertas de Contratos -->
+{% if contratos_vencendo %}
+  <div class="alert alert-warning">
+    <div style="font-size: 1.5rem;">⚠️</div>
+
+    <div style="flex: 1;">
+      <h3 style="margin: 0 0 0.5rem 0;">Contratos próximos do vencimento</h3>
+
+      <ul style="margin: 0; padding-left: 1.5rem;">
+        {% for contrato in contratos_vencendo %}
+          <li style="margin-bottom: 0.5rem;">
+            <a href="{% url 'editar_contrato' contrato.id %}"
+               style="color: inherit; font-weight: 600; text-decoration: underline;">
+              <strong>{{ contrato.codigo }}</strong>
+            </a>
+            — {{ contrato.cliente.nome }}
+            vence em <strong>{{ contrato.data_fim|date:"d/m/Y" }}</strong>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}
+
+  {% if contratos_vencidos %}
+  <div class="alert alert-danger">
+    <div style="font-size: 1.5rem;">⛔</div>
+    <div style="flex: 1;">
+      <h3 style="margin: 0 0 0.5rem 0;">Contratos vencidos</h3>
+      <ul style="margin: 0; padding-left: 1.5rem;">
+        {% for contrato in contratos_vencidos %}
+        <li style="margin-bottom: 0.5rem;">
+          <strong>{{ contrato.codigo }}</strong> — 
+          {{ contrato.cliente.nome }} | 
+          Venceu em <strong>{{ contrato.data_fim|date:"d/m/Y" }}</strong>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Menu de Ações -->
+  <h2 style="margin-top: 2rem; margin-bottom: 1rem;">Ações Rápidas</h2>
+  <ul class="options-list">
+    <!-- Listagens -->
+    <li><a href="{% url 'gerenciar_contratos' %}">⚙️ Gerenciar Contratos</a></li>
+    <li><a href="{% url 'contratos' %}">📄 Ver Contratos Registrados</a></li>
+    <li><a href="{% url 'clientes' %}">👥 Ver Clientes Cadastrados</a></li>
+    <li><a href="{% url 'servicos' %}">📋 Ver Serviços Disponíveis</a></li>
+
+    <!-- CRUD: Cadastro -->
+    <li><a href="{% url 'cadastrar_servico' %}">➕ Cadastrar Serviço</a></li>
+    <li><a href="{% url 'cadastrar_cliente' %}">➕ Cadastrar Cliente</a></li>
+    <li><a href="{% url 'cadastrar_contrato' %}">➕ Cadastrar Contrato</a></li>
+
+    <!-- Usuários -->
+    <li><a href="{% url 'registro' %}">👤 Criar Login de Funcionário</a></li>
+  </ul>
+</div>
+{% endblock %}
